@@ -7,3 +7,4 @@ export const routes = [
   { path: '/b', component: B },
   { path: '/c', component: C },
 ];
+
