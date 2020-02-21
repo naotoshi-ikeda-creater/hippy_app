@@ -1,26 +1,27 @@
-
-
 <template>
-  <div id="app">
-    <div class="header">ヘッダー</div>
-    <router-view></router-view>
-    <div class="footer">フッター</div>
-  </div>
+
+  <v-app >
+    
+      <Navbar />
+      <v-content>
+        <router-view></router-view>
+      </v-content>
+    
+    
+  </v-app>
 </template>
- 
-<style>
-  #app {
-    text-align: center;
-    font-size: 40px;
+
+<script>
+import Navbar from './components/globals/Navbar'
+
+export default {
+  name: 'app',
+  components: {Navbar},
+  data (){
+    return {
+
+    }
   }
-  .header {
-    height: 50px;
-    background-color: #ebebeb;
-    margin-bottom: 50px;
-  }
-  .footer {
-    height: 50px;
-    background-color: #ebebeb;
-    margin-top: 70px;
-  }
-</style>
+  
+}
+</script>

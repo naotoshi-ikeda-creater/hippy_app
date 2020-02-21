@@ -1,0 +1,22 @@
+{
+    "eslint.alwaysShowStatus": true,
+    "eslint.quiet": true,
+    "eslint.enable": false,
+    "eslint.format.enable": true,
+//Vueの自動生成
+
+"editor.codeActionsOnSaveTimeout": 2000,
+"editor.codeActionsOnSave": {
+  "source.fixAll.eslint": true
+},
+"vetur.format.defaultFormatter.html": "prettier",
+"css.validate": false,
+"less.validate": false,
+"scss.validate": false,
+"javascript.format.enable": false,
+
+"prettier.singleQuote": true,
+"prettier.semi":false,
+
+
+}
