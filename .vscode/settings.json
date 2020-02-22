@@ -1,22 +1,31 @@
 {
-    "eslint.alwaysShowStatus": true,
-    "eslint.quiet": true,
-    "eslint.enable": false,
-    "eslint.format.enable": true,
-//Vueの自動生成
-
-"editor.codeActionsOnSaveTimeout": 2000,
+  "editor.renderWhitespace": "all",
+  "workbench.colorTheme": "Visual Studio Dark",
+  //追記内容下
+  "[javascript]": {
+      "editor.tabSize": 2
+  },
+  "[python]": {
+      "editor.tabSize": 4
+  },
+  "eslint.validate": [
+      {
+          "language": "vue",
+          "autoFix": true
+      },
+      {
+          "language": "javascript",
+          "autoFix": true
+      }
+  ],
+  "eslint.autoFixOnSave": true,
+  "prettier.eslintIntegration": true,
+  "vetur.format.defaultFormatter.js": "prettier-eslint",
+  "editor.formatOnSave": true,
+"editor.detectIndentation": false,
 "editor.codeActionsOnSave": {
-  "source.fixAll.eslint": true
-},
-"vetur.format.defaultFormatter.html": "prettier",
-"css.validate": false,
-"less.validate": false,
-"scss.validate": false,
-"javascript.format.enable": false,
-
-"prettier.singleQuote": true,
-"prettier.semi":false,
+    "source.fixAll.eslint": true
+}
 
 
 }
