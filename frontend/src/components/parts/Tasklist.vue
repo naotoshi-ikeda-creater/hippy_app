@@ -79,9 +79,6 @@
 <script>
 import "vue-progress-path/dist/vue-progress-path.css";
 import VueProgress from "vue-progress-path";
-import KProgress from "k-progress";
-import draggable from "vuedraggable";
-import Sortable from "sortablejs";
 
 // var element = document.getElementById("items");
 // var sortable = Sortable.create(element);
@@ -165,16 +162,6 @@ export default {
   },
   methods: {
     showForm() {}
-  },
-  mounted() {
-    const element = document.getElementById("tableBody");
-    const _self = this;
-    Sortable.create(element, {
-      onEnd({ newIndex, oldIndex }) {
-        const rowSelected = _self.desserts.splice(oldIndex, 1)[0];
-        _self.desserts.splice(newIndex, 0, rowSelected);
-      }
-    });
   }
 };
 </script>
