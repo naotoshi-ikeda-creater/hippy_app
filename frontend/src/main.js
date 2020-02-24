@@ -1,27 +1,30 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import App from './App.vue';
-import { routes } from './routes';
-import store from './store/store';
-import { sync } from 'vuex-router-sync'
-import Vuetify from "vuetify"; 
+import Vue from "vue";
+import VueRouter from "vue-router";
+import App from "./App.vue";
+import { routes } from "./routes";
+import store from "./store/store";
+import { sync } from "vuex-router-sync";
+import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
- 
+import "material-design-icons-iconfont/dist/material-design-icons.css";
+import KProgress from "k-progress";
+
 Vue.use(VueRouter);
-Vue.use(Vuetify); 　//Vutify
+Vue.use(Vuetify); //Vutify
+Vue.component("k-progress", KProgress);
+
 const vuetify = new Vuetify();
- 
+
 const router = new VueRouter({
   routes
 });
- 
+
 sync(store, router);
- 
+
 new Vue({
-  el: '#app',
+  el: "#app",
   vuetify,
   router,
   store,
   render: h => h(App)
-})
+});

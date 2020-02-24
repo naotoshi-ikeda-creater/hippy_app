@@ -49,7 +49,7 @@ export default {
       items: [
         { icon: "home", text: "Home", route: "/" },
         { icon: "person_outline", text: "Profile", route: "/a" },
-        { icon: "group", text: "Community", route: "/b" }
+        { icon: "group", text: "Community", route: "/d" }
       ]
     };
   }

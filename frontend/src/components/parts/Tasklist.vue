@@ -1,92 +1,164 @@
 <template>
-  <v-card max-width="1200" class="mx-auto">
-    <v-toolbar card dense color="transparent">
-      <v-toolbar-title> <h3>Doing</h3></v-toolbar-title>
-      <!--空間を開ける -->
-      <v-spacer></v-spacer>
-      <v-menu bottom left>
-        <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
-            <v-icon>settings</v-icon>
-          </v-btn>
+  <div id="dataBoard">
+    <v-card max-width="1200" class="mx-auto">
+      <v-toolbar card dense color="transparent">
+        <v-toolbar-title> <h3>Doing</h3></v-toolbar-title>
+        <!--空間を開ける -->
+        <v-spacer></v-spacer>
+        <v-menu bottom left>
+          <template v-slot:activator="{ on }">
+            <v-btn icon v-on="on">
+              <v-icon>settings</v-icon>
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item v-for="(item, i) in items" :key="i" @click="showForm">
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-toolbar>
+      <v-divider></v-divider>
+      <v-data-table
+        v-model="selected"
+        :headers="headers"
+        :items="desserts"
+        :page.sync="page"
+        :items-per-page="itemsPerPage"
+        :single-select="singleSelect"
+        hide-default-footer
+        class="elevation-1"
+        @page-count="pageCount = $event"
+        show-select
+        item-key="name"
+        id="tableBody"
+      >
+        <template v-slot:item.progress="{ item }">
+          <v-progress-linear
+            v-model="item.progress"
+            height="24"
+            reactive
+            color="#1DE9B6"
+          >
+            <template v-slot="{ value }">
+              <strong id="tableBody">{{ Math.ceil(value) }}%</strong>
+            </template>
+          </v-progress-linear>
         </template>
 
-        <v-list>
-          <v-list-item v-for="(item, i) in items" :key="i" @click="showForm">
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-toolbar>
-    <v-divider></v-divider>
-    <!--線を入れる -->
-    <!-- ここまでがヘッダー  -->
+        <template v-slot:item.action="{ item }">
+          <v-btn icon :to="'/detail/' + item.uri">
+            <v-icon>edit</v-icon>
+          </v-btn>
+          <v-btn icon :to="'/stats/' + item.uri">
+            <v-icon>delete</v-icon>
+          </v-btn>
+        </template>
+      </v-data-table>
 
-    <v-card-text>
-      <template>
-        <v-data-table :headers="headers">
-          <!--ここにデータのやりとりの詳細をかく -->
-          <template slot="items" slot-scope="">
-            <td>checkbox</td>
-            <td>name</td>
-            <td>deadline</td>
-            <td>
-              <v-progress-linear></v-progress-linear>
-              <!-- 進捗具合の可視化 -->
-            </td>
-            <td>
-              <v-button flat icon class="grey">
-                <v-icon>edit</v-icon>
-                <!--　編集ボタン -->
-              </v-button>
-              <v-button flat icon class="grey">
-                <v-icon>delete</v-icon>
-                <!-- 削除ボタン -->
-              </v-button>
-            </td>
-          </template>
-        </v-data-table>
-      </template>
-      <v-divider></v-divider>
-    </v-card-text>
-  </v-card>
+      <div class="text-center pt-2">
+        <v-pagination
+          v-model="page"
+          :length="pageCount"
+          color="#00BFA5"
+        ></v-pagination>
+        <v-text-field
+          :value="itemsPerPage"
+          label="Items per page"
+          type="number"
+          min="-1"
+          max="15"
+          @input="itemsPerPage = parseInt($event, 10)"
+        ></v-text-field>
+      </div>
+    </v-card>
+  </div>
 </template>
 
 <script>
+import "vue-progress-path/dist/vue-progress-path.css";
+import VueProgress from "vue-progress-path";
+import KProgress from "k-progress";
+import draggable from "vuedraggable";
+import Sortable from "sortablejs";
+
+// var element = document.getElementById("items");
+// var sortable = Sortable.create(element);
+
 export default {
   data() {
     return {
+      selected: [],
+      singleSelect: true,
       items: [
         { title: "リスト名の変更" },
         {
           title: "配色の変更"
         }
       ],
-      selected: [],
+      page: 1,
+      pageCount: 0,
+      itemsPerPage: 3,
       headers: [
         {
-          text: "Done",
-          align: "center",
-          sortable: false,
-          value: "checkbox"
-        },
-        {
-          text: "Name",
+          text: "Task's name",
           align: "left",
+          sortable: false,
           value: "name"
         },
+        { text: "deadline", value: "deadline", width: "15%", align: "left" },
+        { text: "progress", value: "progress", width: "36%", align: "left" },
+        { text: "action", value: "action", align: "center" }
+      ],
+      desserts: [
         {
-          text: "Deadline",
-          value: "deadline"
+          id: "",
+          name: "Frozen Yogurt",
+          deadline: "2020/12/12",
+          progress: 90
         },
         {
-          text: "Progress",
-          value: "value"
+          id: "",
+          name: "Frozen Yogurt",
+          deadline: "2020/12/12",
+          progress: 30
         },
         {
-          text: "Action",
-          align: "right",
-          value: "action"
+          id: "",
+          name: "Frozen Yogurt",
+          deadline: "2020/12/12",
+          progress: 20
+        },
+        {
+          id: "",
+          name: "Frozen Yogurt",
+          deadline: "2020/12/12",
+          progress: 12
+        },
+        {
+          id: "",
+          name: "Frozen Yogurt",
+          deadline: "2020/12/12",
+          progress: 56
+        },
+        {
+          id: "",
+          name: "Frozen Yogurt",
+          deadline: "2020/12/12",
+          progress: 10
+        },
+        {
+          id: "",
+          name: "Frozen Yogurt",
+          deadline: "2020/12/12",
+          progress: 34
+        },
+        {
+          id: "",
+          name: "Frozen Yogurt",
+          deadline: "2020/12/12",
+          progress: 80
         }
       ]
     };
@@ -94,39 +166,30 @@ export default {
   methods: {
     showForm() {}
   },
-
-  computed: {
-    tasklist() {
-      return {
-        tasklist: [
-          {
-            name: "GoでのAPI認証",
-            deadline: "2020/4/10",
-            progress: 20
-          },
-          {
-            name: "Vue.jsでログイン画面の実装",
-            deadline: "2020/3/10",
-            progress: 90
-          },
-          {
-            name: "GoでのAPI認証",
-            deadline: "2020/4/10",
-            progress: 20
-          },
-          {
-            name: "GoでのAPI認証",
-            deadline: "2020/4/10",
-            progress: 20
-          },
-          {
-            name: "GoでのAPI認証",
-            deadline: "2020/4/10",
-            progress: 20
-          }
-        ]
-      };
-    }
+  mounted() {
+    const element = document.getElementById("tableBody");
+    const _self = this;
+    Sortable.create(element, {
+      onEnd({ newIndex, oldIndex }) {
+        const rowSelected = _self.desserts.splice(oldIndex, 1)[0];
+        _self.desserts.splice(newIndex, 0, rowSelected);
+      }
+    });
   }
 };
 </script>
+
+<style lang="scss">
+#dataBoard {
+  margin: 20px;
+}
+.vue-progress-path path {
+  stroke-width: 12;
+}
+.vue-progress-path .progress {
+  stroke: red;
+}
+.vue-progress-path .background {
+  stroke: #edd;
+}
+</style>
