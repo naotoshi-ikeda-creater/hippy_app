@@ -7,11 +7,11 @@ import { sync } from "vuex-router-sync";
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
-import KProgress from "k-progress";
+// import KProgress from "k-progress";
 
 Vue.use(VueRouter);
 Vue.use(Vuetify); //Vutify
-Vue.component("k-progress", KProgress);
+// Vue.component("k-progress", KProgress);
 
 const vuetify = new Vuetify();
 
