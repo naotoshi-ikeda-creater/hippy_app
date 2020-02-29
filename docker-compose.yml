@@ -9,15 +9,29 @@ services:
       - MYSQL_DATABASE=hippy_app_db
       - MYSQL_ROOT_PASSWORD=password
     volumes:
-      - ./tmp/db:/var/lib/mysql
-  web:
-    build: .
+      - ./backend/tmp/db:/var/lib/mysql
+  backend:
+    build: ./backend
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - .:/hippy_app
+      - ./backend:/hippy_app
     ports:
       - "3000:3000"
     depends_on:
       - db
     environment:
       DB_HOST: db
+    tty: true
+    stdin_open: true
+  frontend:
+    build: ./frontend
+    command: npm run dev
+    volumes:
+      - ./frontend:/hippy_app
+      - /hippy_app/node_modules
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+    tty: true
+    stdin_open: true
