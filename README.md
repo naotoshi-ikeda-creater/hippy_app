@@ -13,5 +13,5 @@ Hippyは、駆け出しエンジニアや、デザイナー個人向けのタス
 
 
 ## Development tips
-* [開発ガイド(フロントエンド)](./doc/development_guide_frontend.md)
-* [開発ガイド（バックエンド）](./doc/development_guide_backend.md)
+* 開発ガイド(フロントエンド)(./doc/development_guide_frontend.md)
+* 開発ガイド（バックエンド）(./doc/development_guide_backend.md)
