@@ -13,7 +13,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "k-progress": "^1.5.0",
     "react-sortable": "^2.0.0",
     "sortablejs": "^1.10.2",
